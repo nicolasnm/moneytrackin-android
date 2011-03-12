@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+
+<EditText
+    android:id="@+id/transactionDescription"
+    android:layout_height="wrap_content"
+    android:hint="@string/feedbackTransactionDescription"
+    android:inputType="textPersonName"
+    android:layout_width="fill_parent">
+</EditText>
+
+<EditText
+    android:id="@+id/transactionAmount"
+    android:layout_height="wrap_content"
+    android:hint="@string/feedbackTransactionAmount"
+    android:inputType="textPersonName"
+    android:layout_width="fill_parent">
+</EditText>
+<DatePicker
+android:id="@+id/transactionDate"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+></DatePicker>
+
+<Button android:id="@+id/saveTransaction" android:text="@string/saveTransaction"
+		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
