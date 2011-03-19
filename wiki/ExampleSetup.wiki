@@ -1,0 +1,7 @@
+#summary Example of a from ground setup
+
+= Introduction =
+
+  # Download and install [http://www.springsource.com/landing/best-development-tool-enterprise-java STS]
+  # Download and install the android sdk installer [http://developer.android.com/sdk/index.html Android SDK]
+    #  Start the SDK and download default images
