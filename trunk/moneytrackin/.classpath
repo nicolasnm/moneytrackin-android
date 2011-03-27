@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="lib/jdom-1.1.1-android-fork.jar"/>
 	<classpathentry kind="lib" path="lib/json-20080701.jar"/>
 	<classpathentry kind="lib" path="lib/opengl-api-gl1.1-android-2.1_r1.jar"/>
-	<classpathentry kind="lib" path="lib/simple-xml-2.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/spring-android-rest-template-1.0.0.BUILD-20110212.090102-60.jar"/>
+	<classpathentry kind="lib" path="lib/simple-xml-2.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
