@@ -19,19 +19,30 @@
  */
 package com.notarios;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.net.Credentials;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TwoLineListItem;
 
 import com.notarios.bo.ProjectBO;
@@ -40,6 +51,7 @@ import com.notarios.bo.impl.TransactionBasicBO;
 import com.notarios.dao.impl.online.ProjectOnlineDAO;
 import com.notarios.dao.impl.stub.TransactionStubDAO;
 import com.notarios.model.Project;
+import com.notarios.util.Utils;
 
 /**
  * Principal Activity of the moneytrackin application.
@@ -49,21 +61,37 @@ import com.notarios.model.Project;
  *         Nicolás Notario McDonnell
  */
 public class Principal extends ListActivity {
+	public static final String PREFS_NAME = "MoneytrackinPrefFile";
+	public static final int CREDENTIALS_CODE = 5;
+	private final List<Project> projects = new ArrayList<Project>();
+	private ArrayAdapter<Project> projectAdapter;
+	
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// Inits the Business Objects.
-		ProjectBasicBO.initProjectBasicBO(new ProjectOnlineDAO("nicolasnotario", "cac21b2f8af71ab99bd389ad17fb3dc5"));
-		TransactionBasicBO.initTransactionBasicBO(new TransactionStubDAO());
+		// Creates a project adapter that will show the projects
+		projectAdapter = getListProjectAdapter();
+		// Set the project adapter as the list adapter for this activity
+		setListAdapter(projectAdapter);
 
-		final ProjectBO projectBo = ProjectBasicBO.getProjectBasicBO();
-		final List<Project> projects = projectBo.getProjects();
+		// Sets the listener for the project clicks
+		final ListView listView = getListView();
+		listView.setOnItemClickListener(getProjectClickListener());
+		// Initializes the business objects with the user credentials
+		intializeBoWithUserCredentials();
+		updateProjectListView();
+	}
 
-		// Set a list adapter for the list of projects
-		setListAdapter(new ArrayAdapter<Project>(this, R.layout.list_item, projects) {
+
+	/**
+	 * Returns the ArrayAdapter for projects
+	 * @return The ArrayAdapter for projects
+	 */
+	private ArrayAdapter<Project> getListProjectAdapter() {
+		return new ArrayAdapter<Project>(this, R.layout.list_item, projects) {
 			@Override
 			public View getView(final int position, final View convertView, final ViewGroup parent) {
 				View row;
@@ -80,21 +108,73 @@ public class Principal extends ListActivity {
 				view.getText2().setText(String.valueOf((getItem(position)).getAmount()));
 				return row;
 			}
-
-		});
-
-		final ListView lv = getListView();
-
-		// When a project is clicked, pass the selected project and to the transactions activity
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		};
+	}
+	/**
+	 * Returns the OnItemClickListener for projects
+	 * @return The click listener for project list items
+	 */
+	private OnItemClickListener getProjectClickListener() {
+		return new OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				final Project proyecto = (Project) parent.getItemAtPosition(position);
 				final Intent myIntent = new Intent(view.getContext(), ActivityProject.class);
 				myIntent.putExtra("proyectoSerializable", proyecto);
 				startActivityForResult(myIntent, 0);
 			}
-		});
+		};
+	}
+	/**
+	 * Initializes business objects
+	 */
+	private void initBusinessObjects(String[] credentials) {
+		ProjectBasicBO.initProjectBasicBO(new ProjectOnlineDAO(credentials[0], credentials[1]));
+		TransactionBasicBO.initTransactionBasicBO(new TransactionStubDAO());
+	}
+	
+	/**
+	 * Initializes the BO with the username and password saved in shared preferences. If no one are found
+	 * it shows a modal window and asks for them 
+	 */
+	private void intializeBoWithUserCredentials() {
+		final SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		if (settings != null && settings.contains("USERNAME")) {
+			initBusinessObjects(new String[] {settings.getString("USERNAME", ""), settings.getString("PASSWORD", "")});
+		} else {
+			final Dialog dialog = new Dialog(this);
+			dialog.setContentView(R.layout.login_activity);
+			dialog.setTitle("User credentials");
+			dialog.show();
+			Button buttonOK = (Button) dialog.findViewById(R.id.saveCredentials);
+			buttonOK.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					final String username = ((EditText) dialog.findViewById(R.id.username)).getText().toString();
+					final String password = ((EditText) dialog.findViewById(R.id.password)).getText().toString();
+					final boolean save = ((CheckBox) dialog.findViewById(R.id.saveUserCredentials)).isChecked();
+					if (save) {
+						Editor editor = settings.edit();
+						editor.putString("USERNAME", username);
+						editor.putString("PASSWORD", Utils.md5(password));
+						editor.commit();	
+					}
+					initBusinessObjects(new String[] {username, Utils.md5(password)});
+					dialog.dismiss();
+				}
+			});
 
+		}
+	}
+	
+	/**
+	 * Update the list of projects in the view
+	 */
+	private void updateProjectListView() {
+		final ProjectBO projectBo = ProjectBasicBO.getProjectBasicBO();
+		projectAdapter.clear();
+		for (Project p : projectBo.getProjects()) {
+			projectAdapter.add(p);
+		}
 	}
 
 }
