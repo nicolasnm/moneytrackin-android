@@ -60,12 +60,7 @@ public class TransactionsActivity extends AbstractAsyncListActivity {
 		final Project p = (Project) getIntent().getExtras().get("proyectoSerializable");
 		
 		setContentView(R.layout.project_transactions);
-		final TextView textView = (TextView) findViewById(R.id.projectName);
-		textView.setText(p.getName());
-		
-		final TextView amountTextView = (TextView) findViewById(R.id.projectAmount);
-		amountTextView.setText(String.valueOf(p.getAmount()));
-		
+
 		final Button b = (Button) findViewById(R.id.addTransaction);
 		// Add new transaction is clicked, goes to the edit transaction activity
 		b.setOnClickListener(new OnClickListener() {

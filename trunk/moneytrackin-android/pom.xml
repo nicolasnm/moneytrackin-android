@@ -49,6 +49,13 @@
 
 	<dependencies>
 		<dependency>
+            <groupId>admob</groupId>
+            <artifactId>admob-sdk</artifactId>               
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/admob-sdk-android.jar</systemPath>
+        </dependency>
+		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>${android-version}</version>

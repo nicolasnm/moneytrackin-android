@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:background="@color/background" android:layout_height="match_parent">
+	<TextView android:id="@+id/layoutProjectName"
+		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="TextView"
+		android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+		android:textColor="@color/textColor" android:textSize="20sp"
+		android:layout_toLeftOf="@+id/layoutProjectAmount"></TextView>
+	<TextView android:gravity="right" android:layout_width="100dp"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textSize="15sp" android:textColor="@color/positiveColor"
+		android:text="TextView" android:id="@+id/layoutTransactionDate"
+		android:layout_height="wrap_content" android:layout_below="@+id/layoutProjectAmount"
+		android:layout_alignParentRight="true"></TextView>
+	<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="TextView" android:layout_height="wrap_content"
+		android:id="@+id/layoutProjectAmount" android:layout_width="100dp"
+		android:textSize="15sp" android:gravity="right" android:textColor="@color/positiveColor"
+		android:layout_above="@+id/layoutTransactionTags"
+		android:layout_alignParentRight="true"></TextView>
+	<TextView android:text="TextView" android:layout_height="wrap_content"
+		android:id="@+id/layoutTransactionTags" android:layout_width="100dp"
+		android:textSize="15sp" android:gravity="left" android:textColor="@color/positiveColor"
+		android:layout_below="@+id/layoutProjectName"
+		android:layout_alignParentLeft="true"></TextView>
 
-<TwoLineListItem xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    >
-    
-
-    <TextView android:id="@android:id/text1"
-        android:layout_marginTop="1dip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <TextView android:id="@android:id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@android:id/text1"
-        android:layout_alignLeft="@android:id/text1"
-        />
-
-</TwoLineListItem>
+</RelativeLayout>
