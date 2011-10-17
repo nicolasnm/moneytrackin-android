@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
 public class MoneytrackinProjectsListAdapter extends BaseAdapter {
-	DecimalFormat dec = new DecimalFormat("###.##");
+	DecimalFormat dec = new DecimalFormat("0.00");
 	private List<Project> projects;
     private final LayoutInflater layoutInflater;
     public MoneytrackinProjectsListAdapter(Context context, List<Project> projects) {
