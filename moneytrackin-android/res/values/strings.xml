@@ -15,4 +15,7 @@
     <string name="mainActivityUsername">Username</string>
     <string name="mainActivityPassword">Password</string>
     <string name="save">Save</string>
+    <color name="background">#FFFFFF</color>
+    <color name="textColor">#1A517F</color>
+    <color name="positiveColor">#448C3B</color>
 </resources>

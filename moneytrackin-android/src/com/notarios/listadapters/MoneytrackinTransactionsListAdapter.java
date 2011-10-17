@@ -16,7 +16,7 @@ import com.notarios.model.Project;
 import com.notarios.model.Transaction;
 
 public class MoneytrackinTransactionsListAdapter extends BaseAdapter {
-	DecimalFormat dec = new DecimalFormat("###.##");
+	DecimalFormat dec = new DecimalFormat("0.00");
 	private List<Transaction> transactions;
     private final LayoutInflater layoutInflater;
     public MoneytrackinTransactionsListAdapter(Context context, List<Transaction> transactions) {
