@@ -59,6 +59,7 @@ public class AddTransaction extends Activity {
 			final DatePicker picker = ((DatePicker) findViewById(R.id.transactionDate));
 			picker.init(t.getDate().get(Calendar.YEAR), t.getDate().get(Calendar.MONTH),
 					t.getDate().get(Calendar.DAY_OF_MONTH), null);
+			((EditText) findViewById(R.id.transactionTags)).setText(t.getTagsString());
 		}
 
 		final Button b = (Button) findViewById(R.id.saveTransaction);

@@ -154,4 +154,14 @@ public class Transaction implements Serializable {
 	public final int hashCode() {
 		return this.getId();
 	}
+	
+	public String getTagsString() {
+		List<String> tags = getTags();
+		StringBuilder sb = new StringBuilder();
+		for (String tag : tags) {
+			sb.append(" ");
+			sb.append(tag);
+		}
+		return sb.toString();
+	}
 }
