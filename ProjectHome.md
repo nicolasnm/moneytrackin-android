@@ -1,0 +1,1 @@
+An android application to access moneytrackin functionality
